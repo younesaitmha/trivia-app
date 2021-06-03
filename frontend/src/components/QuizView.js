@@ -22,7 +22,7 @@ class QuizView extends Component {
 
   componentDidMount(){
     $.ajax({
-      url: 'localhost:5000/api/v1.0/categories', //TODO: update request URL
+      url: 'http://localhost:5000/api/v1.0/categories', //TODO: update request URL
       type: "GET",
       success: (result) => {
         this.setState({ categories: result.categories })
@@ -48,7 +48,7 @@ class QuizView extends Component {
     if(this.state.currentQuestion.id) { previousQuestions.push(this.state.currentQuestion.id) }
 
     $.ajax({
-      url: 'localhost:5000/api/v1.0/quizzes', //TODO: update request URL
+      url: 'http://localhost:5000/api/v1.0/quizzes', //TODO: update request URL
       type: "POST",
       dataType: 'json',
       contentType: 'application/json',
@@ -90,7 +90,7 @@ class QuizView extends Component {
   restartGame = () => {
     this.setState({
       quizCategory: null,
-      previousQuestions: [], 
+      previousQuestions: [],
       showAnswer: false,
       numCorrect: 0,
       currentQuestion: {},
