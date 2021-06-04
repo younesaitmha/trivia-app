@@ -2,15 +2,17 @@
 
 ## Introduction
 
-Trivia App is a website built by a restful API, which permits you to create questions, see different categories and questions, and play a quiz to test your knowledge. This FullStack project demonstrates my knowledge in building REST APIs with [Flask](https://flask.palletsprojects.com/en/2.0.x/).
+Trivia App is a website built by a restful API, which permits you to create questions, see different categories and questions, and play a quiz to test your knowledge.<br>
+`Game mechanism:` Currently, when a user plays the game they play up to five questions of the chosen category. If there are fewer than five questions in a category, the game will end when there are no more questions in that category.<br>
+This FullStack project demonstrates my knowledge in building REST APIs with [Flask](https://flask.palletsprojects.com/en/2.0.x/).
 
 ## Starting the project
 
 1. Clone the repository to your laptop.
 2. From the backend directory, create a virtual environment, install requirements and set the required environment variables or check out the backend documentation [here]([backend/README.md](https://github.com/younesaitmha/trivia-app/blob/main/backend)).
-3. Start the backend server by running ```` python run.py ````
-4. Run another terminal session. In the frontend directory, run ```` npm install ```` to install the required dependencies.
-5. Finally, start the frontend server by running ```` npm start ````
+3. Start the backend server by running ``` python run.py ```
+4. Run another terminal session. In the frontend directory, run ``` npm install ``` to install the required dependencies.
+5. Finally, start the frontend server by running ``` npm start ```
 6. You can view the website by visiting or clicking [http://localhost:3000](http://localhost:3000) in your browser.
 
 For more information about how to get up and running, consult the following documents:
