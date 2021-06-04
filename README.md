@@ -27,9 +27,7 @@ the backend is a server backed with Flask and SQLAlchemy. The frontend created u
 - clone the project
 - create a new branch
 - open a pull request with only the changed files
-
 - Suggestions
-
     1. Add an additional question field such as rating and make all corresponding updates (db, api endpoints, add question form, etc.)
     2. INTENSE: Add users to the DB and track their game scores
     3. Add capability to create new categories.
