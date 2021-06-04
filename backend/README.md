@@ -9,11 +9,12 @@ This app project demonstrates my skills in building REST APIs with Flask.
 - [Trivia APP Backend](#trivia-app-backend)
   - [Table of Contents](#table-of-contents)
   - [1. Getting Started](#1-getting-started)
-    - [1.1. Installing Dependencies](#11-installing-dependencies)
-      - [1.1.1. Python 3.8](#111-python-38)
-      - [1.1.2. Virtual Environment](#112-virtual-environment)
-      - [1.1.3. PIP Dependencies](#113-pip-dependencies)
-      - [1.1.4. Project Key Dependencies](#114-project-key-dependencies)
+    - [1.1. Backend Structure : Main Files](#11-backend-structure--main-files)
+    - [1.2. Installing Dependencies](#12-installing-dependencies)
+      - [1.2.1. Python 3.8](#121-python-38)
+      - [1.2.2. Virtual Environment](#122-virtual-environment)
+      - [1.2.3. PIP Dependencies](#123-pip-dependencies)
+      - [1.2.4. Project Key Dependencies](#124-project-key-dependencies)
   - [2. setting up](#2-setting-up)
     - [2.1. setting up the environment variables](#21-setting-up-the-environment-variables)
     - [2.2. Database Setup](#22-database-setup)
@@ -33,7 +34,10 @@ This app project demonstrates my skills in building REST APIs with Flask.
 
 ## 1. Getting Started
 
-the code is following [pip8](https://www.python.org/dev/peps/pep-0008/)
+### 1.1. Backend Structure : Main Files
+
+all the backend code is following [pip8](https://www.python.org/dev/peps/pep-0008/).
+
 ```bash
 ├── trivia.psql  *** sql script to create database
 ├── run.py *** Instance of the app. to run is use `` python app.py ``
@@ -47,17 +51,17 @@ the code is following [pip8](https://www.python.org/dev/peps/pep-0008/)
     └── __init__.py *** Contains routes and controllers
 ```
 
-### 1.1. Installing Dependencies
+### 1.2. Installing Dependencies
 
-#### 1.1.1. Python 3.8
+#### 1.2.1. Python 3.8
 
 Follow instructions to install the latest version of python for your platform in the [python docs](https://www.python.org/downloads/)
 
-#### 1.1.2. Virtual Environment
+#### 1.2.2. Virtual Environment
 
 We recommend working within a virtual environment whenever using Python for projects. This keeps your dependencies for each project separate and organized. Instructions for setting up a virtual environment for your platform can be found in the [python docs](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
 
-#### 1.1.3. PIP Dependencies
+#### 1.2.3. PIP Dependencies
 
 Once you have your virtual environment setup and running, install dependencies by navigating to the `/backend` directory and running:
 
@@ -67,7 +71,7 @@ pip install -r requirements.txt
 
 This will install all the required packages we selected within the `requirements.txt` file.
 
-#### 1.1.4. Project Key Dependencies
+#### 1.2.4. Project Key Dependencies
 
 - [Flask](https://flask.palletsprojects.com/en/2.0.x/) is a lightweight backend micro-services framework. Flask is required to handle requests and responses.
 
