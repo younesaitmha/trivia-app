@@ -1,7 +1,7 @@
 # Trivia APP Backend
 
-Trivia App is a website built by a restful API, which permits you to create questions, see different categories and questions, and play a quiz to test your knowledge.<br>
-Game mechanism: Currently, when a user plays the game they play up to five questions of the chosen category. If there are fewer than five questions in a category, the game will end when there are no more questions in that category.<br>
+**Trivia App** is a website built by a restful API, which permits you to create questions, see different categories and questions, and play a quiz to test your knowledge.  
+**Game mechanism:** Currently, when a user plays the game they play up to five questions of the chosen category. If there are fewer than five questions in a category, the game will end when there are no more questions in that category.  
 This app project demonstrates my skills in building REST APIs with Flask.
 
 ## Table of Contents
@@ -153,9 +153,9 @@ you can use [Postman](https://learning.postman.com/docs/publishing-your-api/docu
 
 if any errors occurred, the API will return a json object in the following format:
 
-```bash
+```json
 {
-    "success": False,
+    "success": false,
     "error": 404,
     "message": "resource not found"
 }
@@ -163,26 +163,600 @@ if any errors occurred, the API will return a json object in the following forma
 
 The following errors will be reported:
 
-- 400: `bad request`
-- 404: `resource not found`
-- 405: `method not allowed`
-- 422: `unprocessible`
-- 500: `internal server error`
+- 400: `bad request`            || The request was unacceptable, often due to missing a required parameter.
+- 404: `resource not found`     || The requested resource doesn't exist.
+- 405: `method not allowed`     || the request method is known by the server but is not supported by the target resource.
+- 422: `unprocessible`          || indicates that the server understands the content type of the request entity, and the syntax of the
+                                   request entity is correct, but it was unable to process the contained instructions.
+- 500: `internal server error`  || Something went wrong on Trivia App's end. (These are rare.)
 
 ### 5.3. Endpoints
 
 #### 5.3.1. GET `/categories`
 
+- **Fetches** a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category.
+- **Request Arguments:** None
+- **Returns:** An object with two keys:
+  - `success` (can be true or false; true if the request success)
+  - `categories`: contains an object of:
+    - `id`: `category_string` key:value pairs.
+- **Example response:**
+
+  ````json
+  {
+    "categories": {
+      "1": "history",
+      "2": "art",
+      "3": "sports",
+      "4": "geography",
+      "5": "science"
+    },
+    "success": true
+  }
+  ````
+
 #### 5.3.2. GET `/questions`
+
+- **Fetches** a dictionary of paginated questions, as well as a dictionary of categories.
+- **Request arguments:**
+  - optional URL queries:
+    - `page`: an optional integer for a page number, which is used to fetch 10 questions for the corresponding page.
+    - `default`: 1
+- **Returns**: An object with 4 keys:
+  - categories: a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category.
+    - `id` (str): id category
+    - `category` (str): category text
+  - questions: a list that contains paginated questions objects, that correspond to the page query.
+    - `id` (int): Question id.
+    - `question` (str): Question text.
+    - `difficulty` (int): Question difficulty.
+    - `category` (str): question category id.
+  - `total_questions` (int): an integer that contains total questions
+  - `success` (can be true or false; true if the request success)
+
+- **Example response:**
+
+  ````json
+  {
+    "categories": {
+      "1": "history",
+      "2": "art",
+      "3": "sports",
+      "4": "geography",
+      "5": "science"
+    },
+    "questions": [
+      {
+        "answer": "Muhammad Ali",
+        "category": "1",
+        "difficulty": 4,
+        "id": 1,
+        "question": "What boxers original name is Cassius Clay?"
+      },
+      {
+        "answer": "Lake Victoria",
+        "category": "1",
+        "difficulty": 3,
+        "id": 2,
+        "question": "What is the largest lake in Africa?"
+      },
+      {
+        "answer": "Agra",
+        "category": "2",
+        "difficulty": 5,
+        "id": 3,
+        "question": "The Taj Mahal is located in which Indian city?"
+      },
+      {
+        "answer": "Mona Lisa",
+        "category": "3",
+        "difficulty": 2,
+        "id": 4,
+        "question": "La Giaconda is better known as what?"
+      },
+      {
+        "answer": "Alexander Fleming",
+        "category": "4",
+        "difficulty": 1,
+        "id": 5,
+        "question": "Who discovered penicillin?"
+      },
+      {
+        "answer": "Flask",
+        "category": "5",
+        "difficulty": 2,
+        "id": 7,
+        "question": "What is the application used to build great python backends?"
+      },
+      {
+        "answer": "Flask",
+        "category": "5",
+        "difficulty": 2,
+        "id": 8,
+        "question": "What is the application used to build great python backends?"
+      },
+      {
+        "answer": "younes",
+        "category": "5",
+        "difficulty": 5,
+        "id": 9,
+        "question": "who I am?"
+      },
+      {
+        "answer": "younes",
+        "category": "5",
+        "difficulty": 5,
+        "id": 10,
+        "question": "who I am?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 11,
+        "question": "when python is created?"
+      }
+    ],
+    "success": true,
+    "total_questions": 21
+  }
+  ````
 
 
 #### 5.3.3. GET `/categories/<int:id>/questions`
 
+- **Fetches** a dictionary of paginated questions that are in the category specified in the URL parameters.
+- **Request arguments:**
+  - optional URL queries:
+    - page: an optional integer for a page number, which is used to fetch 10 questions for the corresponding page.
+    - default: 1
+- **Returns:** An object with 4 keys:
+  - `current_category` (str): a string that contains the category type for the selected category.
+  - `questions` (list): a list that contains paginated questions objects, that correspond to the page query.
+    - `id` (int): Question id.
+    - `question` (str): Question text.
+    - `difficulty` (int): Question difficulty.
+    - `category` (str): question category id.
+  - `total_questions` (int): an integer that contains total questions in the selected category.
+  - `success` (can be true or false; true if the request success)
+- **Example response:**
+
+  ````json
+  {
+    "current_category": "history",
+    "questions": [
+      {
+        "answer": "Muhammad Ali",
+        "category": "1",
+        "difficulty": 4,
+        "id": 1,
+        "question": "What boxers original name is Cassius Clay?"
+      },
+      {
+        "answer": "Lake Victoria",
+        "category": "1",
+        "difficulty": 3,
+        "id": 2,
+        "question": "What is the largest lake in Africa?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 11,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 12,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 13,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 14,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 17,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 18,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 19,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 20,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 21,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 23,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 24,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 26,
+        "question": "when python is created?"
+      }
+    ],
+    "success": true,
+    "total_questions": 14
+  }
+  ````
+
 #### 5.3.4. POST `/questions`
 
+- **Posts** a new question.
+- **Request arguments:**
+  - Json object:
+    - `question` (str): A string that contains the question text.
+    - `answer` (str): A string that contains the answer text.
+    - `difficulty` (str): An integer that contains the difficulty, please note that difficulty can be from 1 to 5.
+    - `category` (int): An integer that contains the category id.
+- **Returns:** an object with the following keys:
+  - `id` (int): an integer that contains the ID for the created question.
+  - `question` (str): A string that contains the text for the created question.
+  - `questions` (list): a list that contains paginated questions objects.
+    - `id` (int): Question id.
+    - `question` (str): Question text.
+    - `difficulty` (int): Question difficulty.
+    - `category` (str): question category id.
+  - `total_questions` (int): an integer that contains total questions.
+  - `success` (can be true or false; true if the request success)
+- **Example response:**  
+  post this question:
+
+  ````json
+  {
+      "question": "when python is created?",
+      "answer": "1991",
+      "difficulty": 3,
+      "category": 1
+  }
+  ````
+
+  response:
+
+  ````json
+  {
+    "id": 27,
+    "question": "when python is created?",
+    "questions": [
+      {
+        "answer": "Muhammad Ali",
+        "category": "1",
+        "difficulty": 4,
+        "id": 1,
+        "question": "What boxers original name is Cassius Clay?"
+      },
+      {
+        "answer": "Lake Victoria",
+        "category": "1",
+        "difficulty": 3,
+        "id": 2,
+        "question": "What is the largest lake in Africa?"
+      },
+      {
+        "answer": "Agra",
+        "category": "2",
+        "difficulty": 5,
+        "id": 3,
+        "question": "The Taj Mahal is located in which Indian city?"
+      },
+      {
+        "answer": "Mona Lisa",
+        "category": "3",
+        "difficulty": 2,
+        "id": 4,
+        "question": "La Giaconda is better known as what?"
+      },
+      {
+        "answer": "Alexander Fleming",
+        "category": "4",
+        "difficulty": 1,
+        "id": 5,
+        "question": "Who discovered penicillin?"
+      },
+      {
+        "answer": "Flask",
+        "category": "5",
+        "difficulty": 2,
+        "id": 7,
+        "question": "What is the application used to build great python backends?"
+      },
+      {
+        "answer": "Flask",
+        "category": "5",
+        "difficulty": 2,
+        "id": 8,
+        "question": "What is the application used to build great python backends?"
+      },
+      {
+        "answer": "younes",
+        "category": "5",
+        "difficulty": 5,
+        "id": 9,
+        "question": "who I am?"
+      },
+      {
+        "answer": "younes",
+        "category": "5",
+        "difficulty": 5,
+        "id": 10,
+        "question": "who I am?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 11,
+        "question": "when python is created?"
+      }
+    ],
+    "success": true,
+    "total_questions": 22
+  }
+  ````
 
 #### 5.3.5. POST `/questions/search`
 
+- **Search** for a question.
+- **Request arguments:**
+  - Json object:
+    - `searchTerm` (str): a string that contains the search term to search with.
+- **Returns:** an object with the following keys:
+  - `questions` (list): a list that contains paginated questions objects, derived from the search term.
+    - `id` (int): Question's id.
+    - `question` (str): Question text.
+    - `difficulty` (int): Question's difficulty.
+    - `category` (str): question category id.
+  - `total_questions` (int): an integer that contains total questions returned from the search.
+  - `success` (can be true or false; true if the request success)
+- **Example response:**  
+  search with this:
+
+  ````json
+  {
+      "searchTerm" : "python"
+  }
+  ````
+
+  response :
+
+  ````json
+  {
+    "questions": [
+      {
+        "answer": "Flask",
+        "category": "5",
+        "difficulty": 2,
+        "id": 7,
+        "question": "What is the application used to build great python backends?"
+      },
+      {
+        "answer": "Flask",
+        "category": "5",
+        "difficulty": 2,
+        "id": 8,
+        "question": "What is the application used to build great python backends?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 11,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 12,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 13,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 14,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 17,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 18,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 19,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 20,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 21,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 23,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 24,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 26,
+        "question": "when python is created?"
+      },
+      {
+        "answer": "1991",
+        "category": "1",
+        "difficulty": 3,
+        "id": 27,
+        "question": "when python is created?"
+      }
+    ],
+    "success": true,
+    "total_questions": 15
+  }
+  ````
+
 #### 5.3.6. POST `/quizzes`
 
+- **Allows** the user to play the quiz game, returning a random question that is not in the previous_questions list.
+- **Request arguments:**
+  - Json object:
+    - `quiz_category`: A dictionary that contains the category id.
+      - `id` (int): the category id to get the random question from. use 0 to get a random question from all categories.
+    - `previous_questions` (list): A list that contains the IDs of the previous questions.
+- **Returns:** an object with the following keys :
+  - `question` (dict) that has the following data:
+    - `id` (int): question's ID.
+    - `question` (str): question's question text.
+    - `answer` (str): question's answer text.
+    - `difficulty` (int): question's difficulty
+    - `category` (str): category's ID.
+  - `success` (boolean): (can be true or false; true if the request success)
+- **Example response:**  
+  try with this:
+
+  ````json
+  {
+    "quiz_category" : {
+        "id":5
+    },
+    "previous_questions" : [7, 10, 8]
+  }
+  ````
+
+  response:
+
+  ````json
+  {
+    "question": {
+      "answer": "younes",
+      "category": "5",
+      "difficulty": 5,
+      "id": 9,
+      "question": "who I am?"
+    },
+    "success": true
+  }
+  ````
+
+  try with this:
+
+  ````json
+  {
+    "quiz_category" : {
+        "id":5
+    },
+    "previous_questions" : [7, 10, 8, 9]
+  }
+  ````
+
+  response:
+
+  ````json
+  {
+    "question": null,
+    "success": true
+  }
+  ````
+
 #### 5.3.7. DELETE `/questions/<int:id>`
+
+- **Deletes** the question by the id specified in the URL parameters.
+- **Request arguments:** None
+- **Returns:** A dictionary that contain:
+  - `deleted` (int): question_id
+  - `success` (can be true or false; true if the request success)
+- **Example response:**
+
+  ````json
+  {
+    "deleted": 7,
+    "success": true
+  }
+  ````
