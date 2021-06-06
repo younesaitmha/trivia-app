@@ -164,9 +164,9 @@ def create_app(config=None):
             abort(400)
         search_term = body.get('searchTerm')
         if search_term:
-
             search_results = Question.query.filter(
-                Question.question.ilike(f'%{search_term}%')).all()
+                    Question.question.ilike(f"%{search_term}%")
+                ).all()
 
             if len(search_results) == 0:
                 abort(404)
