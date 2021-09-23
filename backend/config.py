@@ -35,5 +35,6 @@ class DevConfig(Config):
 class TestConfig(DevConfig):
     """ testing config """
 
+    ENV = "testing"
     TESTING = True
     SQLALCHEMY_DATABASE_URI = environ.get('TEST_DATABASE_URI')

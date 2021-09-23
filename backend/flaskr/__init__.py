@@ -23,12 +23,10 @@ def create_app(config=None):
 
     if config == 'development':
         app.config.from_object('config.DevConfig')
-    elif config == 'production':
-        app.config.from_object('config.ProdConfig')
     elif config == 'testing':
         app.config.from_object('config.TestConfig')
     else:
-        app.config.from_object('config.DevConfig')
+        app.config.from_object('config.ProdConfig')
 
     setup_db(app)
 
